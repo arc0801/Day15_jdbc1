@@ -5,34 +5,37 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import com.arc.util.DBConnector;
 
 public class TestDAO3 {
 
-	private DBConnector db;
 
-	public TestDAO3(){
-		db = new DBConnector();
-	}
-
-	public void deptSelectOne(int deptno) {
+	public DeptDTO deptSelectOne(int deptno) {
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		ArrayList<Object> ar = new ArrayList<Object>();
+		DeptDTO deptDTO = null;
 		
 		try {
-			con = db.getConnect();
+			con = DBConnector.getConnect();
 
 			String sql = "select * from dept "
-					+ "where deptno = "+ deptno;
+					+ "where deptno = ?";
 
 			st = con.prepareStatement(sql);
-			rs = st.executeQuery();
-			System.out.println("1");
-			System.out.println(st);
-			System.out.println(rs);
+			st.setInt(1, deptno);
 			
+			rs = st.executeQuery();
+			
+			if(rs.next()) {
+				deptDTO = new DeptDTO();
+				deptDTO.setDeptno(rs.getInt("deptno"));
+				deptDTO.setDname(rs.getString("dname"));
+				deptDTO.setLoc(rs.getString("loc"));
+			}
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -47,6 +50,7 @@ public class TestDAO3 {
 				e.printStackTrace();
 			}
 		}
+		return deptDTO;
 	}
 
 

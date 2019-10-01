@@ -1,5 +1,7 @@
 package com.arc.t1;
 
+import com.arc.view.DeptView;
+
 public class TestMain {
 
 	public static void main(String[] args) {
@@ -25,12 +27,14 @@ public class TestMain {
 		 */
 		
 		TestDAO3 testDAO3 = new TestDAO3();
-		testDAO3.deptSelectOne(10);
+		DeptView dv = new DeptView();
+		DeptDTO deptDTO = testDAO3.deptSelectOne(10);
 		
-		
-		
-		
-		
+		if(deptDTO!=null) {
+			dv.view(deptDTO);
+		}else {
+			dv.view("없는 부서입니다.");
+		}
 	}
 
 }
