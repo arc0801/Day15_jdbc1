@@ -16,7 +16,6 @@ public class TestDAO3 {
 		Connection con = null;
 		PreparedStatement st = null;
 		ResultSet rs = null;
-		ArrayList<Object> ar = new ArrayList<Object>();
 		DeptDTO deptDTO = null;
 		
 		try {
